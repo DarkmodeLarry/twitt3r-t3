@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Gotham';
+  src: url('/assets/fonts/Gotham/Gotham-Book.woff2') format('woff2'),
+    url('/assets/fonts/Gotham/Gotham-Book.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
