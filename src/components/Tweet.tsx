@@ -37,19 +37,21 @@ dayjs.updateLocale('en', {
 function Tweet({
 	tweet,
 	client,
+	input,
 }: {
 	tweet: RouterOutputs['tweet']['timeline']['tweets'][number]
 	client: QueryClient
+	input: RouterInputs['tweet']['timeline']
 }) {
 	const likeMutation = api.tweet.like.useMutation({
 		onSuccess: (data, variables) => {
-			updateCache({ client, data, variables, action: 'like' })
+			updateCache({ client, data, variables, input, action: 'like' })
 		},
 	}).mutateAsync
 
 	const unlikeMutation = api.tweet.unlike.useMutation({
 		onSuccess: (data, variables) => {
-			updateCache({ client, data, variables, action: 'unlike' })
+			updateCache({ client, data, variables, input, action: 'unlike' })
 		},
 	}).mutateAsync
 

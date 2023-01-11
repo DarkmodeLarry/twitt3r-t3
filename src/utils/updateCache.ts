@@ -6,8 +6,10 @@ export function updateCache({
 	variables,
 	data,
 	action,
+	input,
 }: {
 	client: QueryClient
+	input: RouterInputs['tweet']['timeline']
 	variables: {
 		tweetId: string
 	}
@@ -20,9 +22,7 @@ export function updateCache({
 		[
 			['tweet', 'timeline'],
 			{
-				input: {
-					limit: 10,
-				},
+				input,
 				type: 'infinite',
 			},
 		],

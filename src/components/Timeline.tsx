@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { api } from '../utils/api'
+import { RouterInputs, api } from '../utils/api'
 import { CreateTweet } from './CreateTweet'
 import Tweet from './Tweet'
 import useScrollPosition from '../utils/useScroll'
@@ -8,13 +8,18 @@ import Link from 'next/link'
 
 const LIMIT = 10
 
-export function Timeline() {
+export function Timeline({
+	where = {},
+}: {
+	where: RouterInputs['tweet']['timeline']['where']
+}) {
 	const scrollPosition = useScrollPosition()
 
 	const { data, hasNextPage, fetchNextPage, isFetching } =
 		api.tweet.timeline.useInfiniteQuery(
 			{
-				limit: 10,
+				limit: LIMIT,
+				where,
 			},
 			{
 				getNextPageParam: (lastPage) => lastPage.nextCursor,
@@ -36,7 +41,17 @@ export function Timeline() {
 			<CreateTweet />
 			<div className='border-r-2 border-l-2 border-t-2 border-gray-500 '>
 				{tweets.map((tweet) => {
-					return <Tweet key={tweet.id} tweet={tweet} client={client} />
+					return (
+						<Tweet
+							key={tweet.id}
+							tweet={tweet}
+							client={client}
+							input={{
+								where,
+								limit: LIMIT,
+							}}
+						/>
+					)
 				})}
 
 				{!hasNextPage && <p>No more items to load</p>}
